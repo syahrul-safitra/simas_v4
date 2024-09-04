@@ -29,10 +29,10 @@
                     <a href="{{ url('dashboard/disposisi1_diteruskan/create_diteruskan/' . $suratMasuk->id) }} "
                         class="btn btn-success mb-3"><i class="fas fa-paper-plane me-2"></i>Teruskan</a>
                 @else
-                    <a href="{{ url('dashboard/disposisis/' . $disposisi->id) . '/cetak' }} "
+                    <a href="{{ url('dashboard/disposisi1/' . $disposisi->id . '/cetak') }} "
                         class="btn btn-success mb-3"><i class="bi bi-printer me-2"></i>Cetak</a>
 
-                    @if ($disposisi->diteruskan1->first())
+                    @if ($disposisi->disposisi2)
                         <a href="{{ url('dashboard/disposisis1/' . $disposisi->id . '/edit_disposisi1_diteruskan') }} "
                             class="btn btn-warning mb-3"><i class="bi bi-pencil-square me-2"></i>Edit</a>
                     @else
@@ -40,6 +40,16 @@
                             class="btn btn-warning mb-3"><i class="bi bi-pencil-square me-2"></i>Edit</a>
                     @endif
 
+                    @if ($disposisi->selesai)
+                        @if (!$disposisi->verifikasi_kasubag)
+                            <form action="{{ url('dashboard/disposisi1/' . $disposisi->id) }}" method="POST">
+                                @csrf
+                                <div class="btn btn btn-success mb-3 " id="btn-verifikasi">
+                                    <i class="fas fa-key me-2"></i>Verifikasi
+                                </div>
+                            </form>
+                        @endif
+                    @endif
 
                     <form action="{{ url('dashboard/disposisi1/' . $disposisi->id) }}" method="POST">
                         @csrf
@@ -91,12 +101,60 @@
                     <tr>
                         <th scope="row" style="width: 30%">Isi</th>
                         <td style="width: 5%">:</td>
-                        <td style="width: 65%">{!! $disposisi ? $disposisi->isi : '' !!}</td>
+                        <td style="width: 65%">
+
+
+                            {{-- {!! $disposisi ? $disposisi->isi : '' !!} --}}
+
+                            {!! $disposisi ? 'Kasubag : ' . $disposisi->isi : '' !!}
+                            {{-- pesan ini ditampilkan jika sudah dibuat oleh user lain :  --}}
+
+                            @if ($disposisi)
+                                @if ($disposisi->disposisi2)
+
+                                    {{-- @php
+                                        $user3 = App\Models\User::find($disposisi->disposisi2->disposisi3->user_id);
+                                    @endphp --}}
+
+                                    @if ($disposisi->disposisi2->selesai)
+                                        @php
+                                            $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
+
+                                        @endphp
+
+                                        <hr>
+                                        {!! $user2->name . ':' . $disposisi->disposisi2->isi !!}
+                                    @endif
+
+
+                                    @if ($disposisi->disposisi2->disposisi3)
+                                        @if ($disposisi->disposisi2->disposisi3->selesai)
+                                            @php
+                                                $user3 = App\Models\User::find(
+                                                    $disposisi->disposisi2->disposisi3->user_id,
+                                                );
+                                            @endphp
+
+                                            <hr>
+                                            {!! $user3->name . ':' . $disposisi->disposisi2->disposisi3->isi !!}
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" style="width: 30%">Kepada</th>
                         <td style="width: 5%">:</td>
-                        <td style="width: 65%">{!! $disposisi ? $disposisi->kepada : '' !!}</td>
+                        <td style="width: 65%">
+
+
+
+                            {!! $disposisi ? $disposisi->kepada : '' !!}
+
+
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" style="width: 30%">Tanggal</th>
@@ -123,10 +181,10 @@
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
 
-                            @if ($disposisi)
-                                @if ($disposisi->diteruskan1->first())
+                            {{-- @if ($disposisi)
+                                @if ($disposisi->disposisi2)
                                     @php
-                                        $disampaikan = $disposisi->diteruskan1;
+                                        $disampaikan = $disposisi->dis;
 
                                         foreach ($disampaikan as $value) {
                                             $dataKepada[] = $value->user_id;
@@ -139,7 +197,7 @@
                                     @endforeach
                                 @endif
 
-                            @endif
+                            @endif --}}
                         </td>
                     </tr>:
 
@@ -175,4 +233,80 @@
             </table>
         </div>
     </div>
+
+    @if ($disposisi)
+        @if ($disposisi->disposisi2)
+            <div class="bg-light rounded h-100 p-4">
+
+                <div class="col-12">
+                    <h4>Log Surat</h4>
+
+                    <div class="bg-light rounded h-100 p-4">
+
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                <tr>
+
+                                    <th scope="row" style="width: 30%">
+
+                                        @php
+                                            $user = App\Models\User::find($disposisi->user_id);
+                                        @endphp
+
+
+                                        ({{ date('d-m-Y', strtotime($disposisi->created_at)) }})
+                                        {{ $user->name }} menyampaiakan surat ke</th>
+                                    <td style="width: 5%">:</td>
+                                    <td style="width: 65%">
+                                        @php
+
+                                            $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
+
+                                        @endphp
+
+                                        <p>{{ $user2->name }}</p>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    @if ($disposisi->disposisi2)
+                                        @if ($disposisi->disposisi2->selesai)
+                                            <th scope="row" style="width: 30%">
+
+                                                ({{ date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) }})
+                                                {{ $user2->name }} </th>
+                                            <td style="width: 5%">:</td>
+                                            <td style="width: 65%">
+                                                {!! $disposisi->disposisi2->isi !!}
+                                            </td>
+                                        @endif
+                                    @endif
+
+                                </tr>
+
+                                {{-- <tr>
+                                    @if ($disposisi->disposisi2)
+                                        @if ($disposisi->disposisi2->selesai)
+                                            @if ($disposisi->disposisi2->disposisi3->selesai)
+                                                <th scope="row" style="width: 30%">
+
+                                                    ({{ date('d-m-Y', strtotime($disposisi->disposisi2->disposisi3->created_at)) }})
+                                                    {{ $user3->name }} </th>
+                                                <td style="width: 5%">:</td>
+                                                <td style="width: 65%">
+                                                    {!! $disposisi->disposisi2->disposisi3->isi !!}
+                                                </td>
+                                            @endif
+                                        @endif
+                                    @endif
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endif
 @endsection

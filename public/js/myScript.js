@@ -178,4 +178,24 @@ $(document).ready(function () {
          }
       })
    })
+
+   $('#btn-verifikasi').on('click', function(e) {
+      e.preventDefault();
+
+      let form = $(this).closest('form');
+
+      swal({
+         title: 'Apakah anda sudah memverifikasi data disposisi?',
+         // text: 'Data instansi akan dihapus',
+         icon: 'success',
+         buttons: true,
+         dangerMode: false,
+      })
+         // jika btn ok di klik : 
+         .then((willdelete) => {
+            if (willdelete) {
+               form.submit();
+            }
+         })
+   });
 });

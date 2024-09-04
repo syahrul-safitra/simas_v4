@@ -2,7 +2,7 @@
 
 @section('container')
     <div class="col-12">
-        <h4 class="mb-2"><i class="bi bi-envelope"></i> Surat dari KASUBAG</h4>
+        <h4 class="mb-2"><i class="bi bi-envelope me-3"></i>Disposisi yang diproses</h4>
         {{-- Session Message --}}
         @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -24,20 +24,20 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($disposisis2 as $disposisi2)
+                        @foreach ($disposisis3 as $disposisi3)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
-                                <td>{{ $disposisi2->disposisi1->suratMasuk->asal_surat }}</td>
-                                <td>{{ $disposisi2->disposisi1->suratMasuk->status }}</td>
+                                <td>{{ $disposisi3->disposisi2->disposisi1->suratMasuk->asal_surat }}</td>
+                                <td>{{ $disposisi3->disposisi2->disposisi1->suratMasuk->status }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <a class="fs-4" style="color: red"
-                                            href="{{ asset('file/' . $disposisi2->disposisi1->suratMasuk->file) }}"><i
+                                            href="{{ asset('file/' . $disposisi3->disposisi2->disposisi1->suratMasuk->file) }}"><i
                                                 class="bi bi-file-earmark-pdf-fill"></i></a>
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{ url('pengguna/disposisi2/' . $disposisi2->disposisi1->id) }}"
+                                    <a href="{{ url('pengguna/disposisi3/' . $disposisi3->disposisi2->disposisi1->id) }}"
                                         class="btn btn-success"
                                         style="padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px"><i
                                             class="bi bi-file-earmark-arrow-up"></i></a>

@@ -49,5 +49,9 @@
                     class="nav-item nav-link {{ Request::is('dashboard/suratdisampaikan*') ? 'active' : '' }}"><i
                         class="bi bi-file-earmark-text-fill me-2"></i>Lanjutan Disposisi</a>
             @endcan
+
+            <a href="{{ url('pengguna/disposisi3') }}"
+                class="nav-item nav-link {{ Request::is('pengguna/disposisi3*') ? 'active' : '' }}"><i
+                    class="fas fa-envelope-open me-2"></i>Lanjutan Disposisi</a>
     </nav>
 </div>

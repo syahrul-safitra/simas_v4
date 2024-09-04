@@ -10,18 +10,19 @@ class Disposisi2 extends Model
     use HasFactory;
 
     protected $fillable = [
-        'catatan',
+        'isi',
         'selesai',
-        'diteruskan1_id'
+        'user_id',
+        'disposisi1_id'
     ];
 
-    public function diteruskan1()
+    public function disposisi3()
     {
-        return $this->belongsTo(Diteruskan1::class);
+        return $this->hasOne(Disposisi3::class);
     }
 
-    public function diteruskan2()
+    public function disposisi1()
     {
-        return $this->hasMany(Diteruskan2::class);
+        return $this->belongsTo(Disposisi1::class);
     }
 }

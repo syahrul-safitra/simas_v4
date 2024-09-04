@@ -148,13 +148,14 @@ class SuratMasukController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SuratMasuk $suratMasuk)
+    public function destroy(SuratMasuk $suratmasuk)
     {
+
         // hapus data file terlebih dahulu : 
-        File::delete('file/' . $suratMasuk->file);
+        File::delete('file/' . $suratmasuk->file);
 
         // hapus data dari db : 
-        SuratMasuk::destroy($suratMasuk->id);
+        SuratMasuk::destroy($suratmasuk->id);
 
         // with() :: adalah session yang digunakan untuk mengirim pesan succes atau error saat data telah di inputkan : 
         return redirect('dashboard/suratmasuk')->with('success', 'Surat telah dihapus!');

@@ -13,6 +13,8 @@
         {{-- input hidden no_surat_masuk --}}
         <input type="hidden" name="surat_masuk_id" value="{{ $suratMasuk->id }}">
 
+        <input type="hidden" name="create_id" value="{{ auth()->user()->id }}">
+
         <!-- row 1 -->
         <div class="row">
             <div class="col-lg-6 mb-3">
@@ -103,17 +105,17 @@
         <div class="row ">
             <div class="col-lg-12 mb-3">
                 <label for="" class="form-label">Diteruskan kepada <span class="text-danger">*</span></label>
-                @error('diteruskan1')
+                @error('user_id')
                     <div class="alert alert-danger">
-                        {{ 'Mohon input check-box minimal 1' }}
+                        {{ 'Mohon input 1 check box' }}
                     </div>
                 @enderror
                 @foreach ($users as $user)
                     <div class="d-block">
-                        <input type="checkbox" class="form-check-input" value="{{ $user->id }}"
-                            name="diteruskan1[]"
-                            {{ @old('diteruskan1') ? (in_array($user->id, @old('diteruskan1')) ? 'checked' : '') : '' }}>
-                        <label class="form-check-label" for="{{ $user->name }}">{{ $user->name }}</label>
+                        <input type="radio" class="form-check-input" value="{{ $user->id }}" name="user_id"
+                            {{ @old('user_id') ? (@old('user_id') == $user->id ? 'checked' : '') : '' }}
+                            {{-- {{ @old('user_id') ? (in_array($user->id, @old('user_id')) ? 'checked' : '') : '' }}> --}} <label class="form-check-label"
+                            for="{{ $user->name }}">{{ $user->name }}</label>
                     </div>
                 @endforeach
             </div>

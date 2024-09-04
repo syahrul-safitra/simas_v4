@@ -11,10 +11,11 @@
 
         @csrf
 
-        <input type="hidden" name="surat_masuk_id" value="{{ $suratMasuk->id }}">
+        <input type="hidden" name="disposisi1_id" value="{{ $suratMasuk->disposisi1->id }}">
 
-        <input type="hidden" name="diteruskan1_id" value="{{ $suratMasuk->disposisi1->diteruskan1->first()->id }}">
+        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
+        <input type="hidden" name="disposisi2_id" value="{{ $suratMasuk->disposisi1->disposisi2->id }}">
         <!-- row 1 -->
         <div class="row">
             <div class="col-lg-6 mb-3">
@@ -107,11 +108,11 @@
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <label for="body" class="form-label">Isi <span class="text-danger">*</span></label>
-                @error('catatan')
+                @error('isi')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-                <input id="catatan" type="hidden" value="{{ old('catatan') }}" name="catatan" required>
-                <trix-editor input="catatan"></trix-editor>
+                <input id="isi" type="hidden" value="{{ old('isi') }}" name="isi" required>
+                <trix-editor input="isi"></trix-editor>
             </div>
             <div class="col-lg-6 mb-3">
             </div>

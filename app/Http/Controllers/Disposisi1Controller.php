@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disposisi1;
+use App\Models\Disposisi2;
 use App\Models\SuratMasuk;
 use App\Models\User;
 use App\Models\Diteruskan1;
@@ -56,6 +57,7 @@ class Disposisi1Controller extends Controller
             'pukul' => '',
             'isi' => 'required',
             'surat_masuk_id' => 'required',
+            'user_id' => 'required',
         ]);
 
         $validated['verifikasi_kasubag'] = true;
@@ -84,7 +86,8 @@ class Disposisi1Controller extends Controller
             'pukul' => '',
             'isi' => 'required',
             'surat_masuk_id' => 'required',
-            'diteruskan1' => 'required'
+            'user_id' => 'required',
+            'create_id' => 'required'
         ]);
 
         $inputDisposisi['indek_berkas'] = $validated['indek_berkas'];
@@ -94,6 +97,7 @@ class Disposisi1Controller extends Controller
         $inputDisposisi['pukul'] = $validated['pukul'];
         $inputDisposisi['isi'] = $validated['isi'];
         $inputDisposisi['surat_masuk_id'] = $validated['surat_masuk_id'];
+        $inputDisposisi['user_id'] = $validated['create_id'];
 
         // Transaction : 
         DB::beginTransaction();
@@ -102,13 +106,12 @@ class Disposisi1Controller extends Controller
             // input data disposisi : 
             $dataDisposisi1 = Disposisi1::create($inputDisposisi);
 
-            // input data disampaikan kepada : 
-            foreach ($validated['diteruskan1'] as $user_id) {
-                Diteruskan1::create([
-                    'disposisi1_id' => $dataDisposisi1->id,
-                    'user_id' => $user_id
-                ]);
-            }
+            // input data disposisi2 pada column user_id : 
+            Disposisi2::create([
+                'user_id' => $validated['user_id'],
+                'disposisi1_id' => $dataDisposisi1->id
+            ]);
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -132,7 +135,6 @@ class Disposisi1Controller extends Controller
             'pukul' => '',
             'isi' => 'required',
             'surat_masuk_id' => 'required',
-            // 'disampaikan_kepada' => 'required'
         ]);
 
         $inputDisposisi['indek_berkas'] = $validated['indek_berkas'];
@@ -165,7 +167,7 @@ class Disposisi1Controller extends Controller
 
         // cek apakah data disposisi ada atau tidak : 
         if (Disposisi1::where('surat_masuk_id', $id)->first()) {
-            $getDisposisi = Disposisi1::where('surat_masuk_id', $id)->first();
+            $getDisposisi = Disposisi1::with('disposisi2.disposisi3')->where('surat_masuk_id', $id)->first();
         }
 
         return view('Disposisi.index', [
@@ -228,7 +230,8 @@ class Disposisi1Controller extends Controller
             'tanggal' => '',
             'pukul' => '',
             'isi' => 'required',
-            'diteruskan1' => 'required'
+            'user_id' => 'required',
+            'disposisi2_id' => 'required'
         ]);
 
         $inputDisposisi['indek_berkas'] = $validated['indek_berkas'];
@@ -238,20 +241,21 @@ class Disposisi1Controller extends Controller
         $inputDisposisi['pukul'] = $validated['pukul'];
         $inputDisposisi['isi'] = $validated['isi'];
 
-        $diteruskan1 = $validated['diteruskan1'];
+        // $disposisi2_user_id = $validated['user_id'];
 
         DB::beginTransaction();
 
         try {
             $disposisi1->update($inputDisposisi);
-            Diteruskan1::where('disposisi1_id', $disposisi1->id)->delete();
 
-            foreach ($diteruskan1 as $user) {
-                Diteruskan1::create([
-                    'disposisi1_id' => $disposisi1->id,
-                    'user_id' => $user
-                ]);
-            }
+            // hapus data yang disposisi yang lama : 
+            Disposisi2::destroy($validated['disposisi2_id']);
+
+            // buat ulang data disposisi 2 :
+            Disposisi2::create([
+                'user_id' => $validated['user_id'],
+                'disposisi1_id' => $disposisi1->id
+            ]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -276,5 +280,19 @@ class Disposisi1Controller extends Controller
         // with() :: adalah session yang digunakan untuk mengirim pesan succes atau error saat data telah di inputkan : 
         return redirect('dashboard/disposisi1/' . $suratMasukId)->with('success', 'Disposisi has been deleted!');
 
+    }
+
+    public function verifikasi(Disposisi1 $disposisi1)
+    {
+        $disposisi1->update(['verifikasi_kasubag' => 1]);
+
+        return redirect('dashboard/disposisi1/' . $disposisi1->surat_masuk_id)->with('success', 'Disposisi telah diverifikasi!');
+    }
+
+    public function cetak(Disposisi1 $disposisi1)
+    {
+        return view('Disposisi.cetak', [
+            'disposisi' => $disposisi1,
+        ]);
     }
 }

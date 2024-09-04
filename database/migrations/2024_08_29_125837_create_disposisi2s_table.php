@@ -12,11 +12,15 @@ return new class extends Migration {
     {
         Schema::create('disposisi2s', function (Blueprint $table) {
             $table->id();
-            $table->string('catatan');
-            $table->boolean('selesai');
+            $table->text('isi')->nullable();
+            $table->boolean('selesai')->default(false);
 
-            $table->foreignId('diteruskan1_id')
-                ->unique()->constrained()
+            $table->foreignId('user_id')->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->foreignId('disposisi1_id')->constrained()
+                ->unique()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 

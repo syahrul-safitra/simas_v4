@@ -162,35 +162,70 @@
             <div class="main">
                 <div class="main-isi">
                     <p>Disampaikan Kepada</p>
-
+                    <hr>
                     <br>
-
-                    @php
-                        $x = 1;
-
-                        $disampaikan = $disposisi->disampaikanKepada;
-
-                        foreach ($disampaikan as $value) {
-                            $dataKepada[] = $value->user_id;
-                        }
-
-                    @endphp
-                    @foreach ($users as $user)
-                        @if (in_array($user->id, $dataKepada))
-                            <p>{{ $x . '.' . $user->name }}</p>
+                    @if ($disposisi->disposisi2)
+                        @if ($disposisi->disposisi2->selesai)
                             @php
-                                $x++;
+                                $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
                             @endphp
+
+                            <p>{{ '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user2->name }}
+                            </p>
+                            <hr>
+                            <br>
                         @endif
-                    @endforeach
+                    @endif
+
+                    @if ($disposisi->disposisi2)
+                        @if ($disposisi->disposisi2->selesai)
+                            @if ($disposisi->disposisi2->disposisi3)
+                                @if ($disposisi->disposisi2->disposisi3->selesai)
+                                    @php
+                                        $user3 = App\Models\User::find($disposisi->disposisi2->disposisi3->user_id);
+                                    @endphp
+
+                                    <p>{{ '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user3->name }}
+                                    </p>
+                                @endif
+                            @endif
+                        @endif
+                    @endif
+
                 </div>
 
                 <div class="main-isi">
                     <p>Isi</p>
-
+                    <hr>
                     <br>
 
                     <p>{!! $disposisi->isi !!}</p>
+                    <hr>
+                    <br>
+
+                    @if ($disposisi->disposisi2)
+                        @if ($disposisi->disposisi2->selesai)
+                            <p>{!! $disposisi->disposisi2->isi !!}
+                            </p>
+                            <hr>
+                            <br>
+                        @endif
+                    @endif
+
+
+                    @if ($disposisi->disposisi2)
+                        @if ($disposisi->disposisi2->selesai)
+                            @if ($disposisi->disposisi2->disposisi3)
+                                @if ($disposisi->disposisi2->disposisi3->selesai)
+                                    <p>{!! $disposisi->disposisi2->disposisi3->isi !!}
+                                    </p>
+                                    <hr>
+                                    <br>
+                                @endif
+                            @endif
+                        @endif
+                    @endif
+
                 </div>
             </div>
 

@@ -14,7 +14,8 @@
 
         <input type="hidden" name="surat_masuk_id" value="{{ $suratMasuk->id }}">
 
-        <input type="hidden" name="diteruskan1_id" value="{{ $suratMasuk->disposisi1->diteruskan1->first()->id }}">
+        <input type="hidden" name="disposisi1_id" value="{{ $suratMasuk->disposisi1->id }}">
+        {{-- <input type="hidden" name="diteruskan1_id" value="{{ $suratMasuk->disposisi1->diteruskan1->first()->id }}"> --}}
 
         <!-- row 1 -->
         <div class="row">
@@ -108,12 +109,11 @@
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <label for="body" class="form-label">Isi <span class="text-danger">*</span></label>
-                @error('catatan')
+                @error('isi')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-                <input id="catatan" type="hidden" value="{{ old('catatan', $disposisi2->catatan) }}" name="catatan"
-                    required>
-                <trix-editor input="catatan"></trix-editor>
+                <input id="isi" type="hidden" value="{{ old('isi', $disposisi2->isi) }}" name="isi" required>
+                <trix-editor input="isi"></trix-editor>
 
                 {{-- <input type="text" class="form-control" value="{{ @old('catatan', $disposisi2->catatan) }}" required
                     name="catatan"> --}}

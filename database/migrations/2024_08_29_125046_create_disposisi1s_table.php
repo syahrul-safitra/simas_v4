@@ -26,6 +26,11 @@ return new class extends Migration {
             $table->foreignId('surat_masuk_id')->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->foreignId('user_id')->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
         });
     }
 

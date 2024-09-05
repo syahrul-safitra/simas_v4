@@ -29,17 +29,7 @@
                     autocomplete="off" readonly>
             </div>
 
-            <div class="col-lg-12 mb-3">
-                {{-- <label for="">Pesan dari kasubag</label>
-                <input type="text" class="form-control" value="{!! $suratMasuk->disposisi1->isi !!}" readonly> --}}
-                <label class="form-label">Pesan dari kasubag : </label>
-                <div class="readonly">
-                    {!! date('d-m-Y', strtotime($suratMasuk->disposisi1->created_at)) . $suratMasuk->disposisi1->isi !!}
-                </div>
-            </div>
         </div>
-
-        <hr>
         <!-- row 2 -->
         <div class="row">
             <div class="col-lg-6 mb-3">

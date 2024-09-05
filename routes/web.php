@@ -36,9 +36,9 @@ Route::get('dashboard/disposisi1_diteruskan/create_diteruskan/{suratmasuk}', [Di
 Route::get('dashboard/disposisis1/{disposisi1}/edit_disposisi1_diteruskan', [Disposisi1Controller::class, 'edit_disposisi1_diteruskan'])->middleware('auth');
 Route::post('dashboard/disposisi1/diteruskan', [Disposisi1Controller::class, 'store_disposisi1_diteruskan'])->middleware('auth');
 Route::post('dashboard/disposisi1_diteruskan/{disposisi1}/update_disposisi1_diteruskan', [Disposisi1Controller::class, 'update_disposisi1_diteruskan'])->middleware('auth');
-Route::post('dashboard/disposisi1/{disposisi1}', [Disposisi1Controller::class, 'verifikasi'])->middleware('auth');
+Route::post('dashboard/disposisi1/{disposisi1}/verifikasi', [Disposisi1Controller::class, 'verifikasi'])->middleware('auth');
+Route::post('dashboard/disposisi1/{disposisi1}/arsipkan', [Disposisi1Controller::class, 'arsipkan'])->middleware('auth');
 Route::get('dashboard/disposisi1/{disposisi1}/cetak', [Disposisi1Controller::class, 'cetak']);
-
 
 // Disposisi2 :
 Route::resource('pengguna/disposisi2', Disposisi2Controller::class)->middleware(['auth', 'pengguna']);

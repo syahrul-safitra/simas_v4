@@ -9,7 +9,7 @@ class Disposisi1 extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['indek_berkas', 'kode_klasifikasi_arsip', 'tanggal_penyelesaian', 'isi', 'tanggal', 'pukul', 'surat_masuk_id', 'user_id', 'verifikasi_kasubag', 'selesai'];
+    protected $fillable = ['indek_berkas', 'kode_klasifikasi_arsip', 'tanggal_penyelesaian', 'pesan_arsipkan', 'tanggal', 'pukul', 'surat_masuk_id', 'user_id', 'verifikasi_kasubag', 'selesai', 'arsipkan'];
 
     protected $casts = [
         'pukul' => 'datetime'

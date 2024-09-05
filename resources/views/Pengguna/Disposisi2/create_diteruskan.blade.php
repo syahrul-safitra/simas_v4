@@ -79,14 +79,6 @@
         <!-- row 4 -->
         <div class="row">
             <div class="col-lg-6 mb-3">
-                <label for="kepada" class="form-label">Kepada</label>
-                <input type="text" class="form-control @error('kepada') is-invalid @enderror" name="kepada"
-                    value="{{ @old('kepada', $suratMasuk->disposisi1->kepada) }}" id="kepada" autocomplete="off">
-                @error('kepada')
-                    <p class="text-danger">{{ $kepada }}</p>
-                @enderror
-            </div>
-            <div class="col-lg-6 mb-3">
                 <label for="pukul" class="form-label">Pukul</label>
                 <input type="time" class="form-control" name="pukul" value="@old('pukul')" id="pukul">
                 @error('pukul')
@@ -95,14 +87,12 @@
             </div>
         </div>
 
-        <div class="col-lg-12 mb-3">
-            {{-- <label for="">Pesan dari kasubag</label>
-            <input type="text" class="form-control" value="{!! $suratMasuk->disposisi1->isi !!}" readonly> --}}
+        {{-- <div class="col-lg-12 mb-3">
             <label class="form-label">Pesan dari kasubag : </label>
             <div class="readonly">
                 {!! date('d-m-Y', strtotime($suratMasuk->disposisi1->created_at)) . $suratMasuk->disposisi1->isi !!}
             </div>
-        </div>
+        </div> --}}
 
         <!-- row 5 -->
         <div class="row">

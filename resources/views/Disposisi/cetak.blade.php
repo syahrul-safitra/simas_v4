@@ -93,15 +93,17 @@
             <table class="table-1">
                 <tr>
                     <td><img src="{{ asset('img/logo_uin.png') }}" alt="UIN STS JAMBI"></td>
-                    <td style="width: 20px;"></td>
+                    {{-- <td style="width: 20px;"></td> --}}
 
                     <td class="tengah">
                         <div class="tengah">
                             <h3>KEMENTRIAN AGAMA RI</h3>
+                            <h3>FAKULTAS SAINS DAN TEKNOLOGI</h3>
                             <h3>UIN SULTHAN THAHA SAIFUDDIN</h3>
                             <h3>JAMBI</h3>
                         </div>
                     </td>
+                    <td><img src="{{ asset('img/logo_fst.jpeg') }}" alt="UIN STS JAMBI"></td>
                 </tr>
             </table>
             <center>
@@ -156,74 +158,101 @@
             </table>
 
             <div class="tanggal-penyelesaian" style="padding-top:10px; padding-bottom: 10px; padding-left: 10px;">
-                <p>Tanggal Penyelesaian : {{ date('d-m-Y', strtotime($disposisi->tanggal_penyelesaian)) }}</p>
+                <p>Tanggal Penyelesaian :
+                    {{ $disposisi->tanggal_penyelesaian ? date('d-m-Y', strtotime($disposisi->tanggal_penyelesaian)) : ' ' }}
+                </p>
             </div>
 
             <div class="main">
                 <div class="main-isi">
                     <p>Disampaikan Kepada</p>
-                    <hr>
+
                     <br>
                     @if ($disposisi->disposisi2)
-                        @if ($disposisi->disposisi2->selesai)
-                            @php
-                                $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
-                            @endphp
+                        @php
+                            $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
 
-                            <p>{{ '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user2->name }}
-                            </p>
-                            <hr>
-                            <br>
-                        @endif
+                            $no = 1;
+                        @endphp
+
+                        <p style="display: flex; gap:10px">
+                            {{ $no . '. ' . '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user2->name }}
+                            <img src="{{ asset('img/centang.svg') }}" alt="centang" style="width: 20px; height:20px">
+                        </p>
+                        <br>
                     @endif
 
                     @if ($disposisi->disposisi2)
                         @if ($disposisi->disposisi2->selesai)
                             @if ($disposisi->disposisi2->disposisi3)
-                                @if ($disposisi->disposisi2->disposisi3->selesai)
-                                    @php
-                                        $user3 = App\Models\User::find($disposisi->disposisi2->disposisi3->user_id);
-                                    @endphp
+                                {{-- @if ($disposisi->disposisi2->disposisi3->selesai) --}}
+                                @php
+                                    $user3 = App\Models\User::find($disposisi->disposisi2->disposisi3->user_id);
+                                    $no++;
+                                @endphp
 
-                                    <p>{{ '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user3->name }}
-                                    </p>
-                                @endif
+                                {{-- <p>{{ '(' . date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) . ') ' . $user3->name }}
+                                </p> --}}
+
+                                <p style="display: flex; gap:10px">
+                                    {{ $no . '. ' . '(' . date('d-m-Y', strtotime($disposisi->disposisi2->disposisi3->created_at)) . ') ' . $user3->name }}
+                                    <img src="{{ asset('img/centang.svg') }}" alt="centang"
+                                        style="width: 20px; height:20px">
+                                </p>
+                                <br>
+                                {{-- @endif --}}
                             @endif
                         @endif
+                    @endif
+
+                    @if ($disposisi->arsipkan)
+                        @php
+                            $no++;
+                        @endphp
+                        <p style="display: flex; gap:10px">
+                            {{ $no . '. ' . '(' . date('d-m-Y', strtotime($disposisi->updated_at)) . ') ' . 'Kasubag' }}
+                            <img src="{{ asset('img/centang.svg') }}" alt="centang" style="width: 20px; height:20px">
+                        </p>
                     @endif
 
                 </div>
 
                 <div class="main-isi">
                     <p>Isi</p>
-                    <hr>
-                    <br>
-
-                    <p>{!! $disposisi->isi !!}</p>
-                    <hr>
                     <br>
 
                     @if ($disposisi->disposisi2)
                         @if ($disposisi->disposisi2->selesai)
-                            <p>{!! $disposisi->disposisi2->isi !!}
-                            </p>
-                            <hr>
+                            @php
+                                $nomor = 1;
+                            @endphp
+
+                            <div style="display: flex">{{ $nomor . '. ' }} {!! $disposisi->disposisi2->isi !!}</div>
                             <br>
                         @endif
                     @endif
 
-
+                    {{-- Menampilkan isi dari disposisi ke 3 --}}
                     @if ($disposisi->disposisi2)
                         @if ($disposisi->disposisi2->selesai)
                             @if ($disposisi->disposisi2->disposisi3)
                                 @if ($disposisi->disposisi2->disposisi3->selesai)
-                                    <p>{!! $disposisi->disposisi2->disposisi3->isi !!}
-                                    </p>
-                                    <hr>
+                                    @php
+                                        $nomor++;
+                                    @endphp
+                                    <div style="display: flex">{{ $nomor . '. ' }} {!! $disposisi->disposisi2->disposisi3->isi !!}</div>
                                     <br>
                                 @endif
                             @endif
                         @endif
+                    @endif
+
+                    @if ($disposisi->arsipkan)
+                        @php
+                            $nomor++;
+                        @endphp
+
+                        <div style="display: flex">{{ $nomor . '. ' }} {!! $disposisi->pesan_arsipkan !!}</div>
                     @endif
 
                 </div>

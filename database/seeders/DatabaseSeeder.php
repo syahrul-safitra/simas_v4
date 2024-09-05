@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'master',
             'no_wa' => '082387120434',
             'email' => 'kasubag@gmail.com',
-            'password' => 'kasubag12',
+            'password' => 'password',
             'permission' => 0
         ]);
 
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'master',
             'no_wa' => '083165846919',
             'email' => 'staff@gmail.com',
-            'password' => 'staff12'
+            'password' => 'password'
         ]);
 
         \App\Models\User::create([
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'pengguna',
             'no_wa' => '085788327233',
             'email' => 'dekan@gmail.com',
-            'password' => 'dekan12'
+            'password' => 'password'
         ]);
 
         \App\Models\User::create([
@@ -53,63 +53,63 @@ class DatabaseSeeder extends Seeder
             'level' => 'pengguna',
             'no_wa' => '089516134562',
             'email' => 'wdbak@gmail.com',
-            'password' => 'wdbak12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Wakil Dekan Bidang Keuangan dan Umum',
             'status' => 'wd-2',
             'level' => 'pengguna',
             'email' => 'wakildekan2@gmail.com',
-            'password' => 'wdbku12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Sistem Informasi',
             'status' => 'prodi-si',
             'level' => 'pengguna',
             'email' => 'prodisi@gmail.com',
-            'password' => 'prodisi12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Biologi',
             'status' => 'prodi-biologi',
             'level' => 'pengguna',
             'email' => 'prodibiologi@gmail.com',
-            'password' => 'prodibiologi12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Fisika',
             'status' => 'prodi-fisika',
             'level' => 'pengguna',
             'email' => 'prodifisika@gmail.com',
-            'password' => 'prodifisika12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Kimia',
             'status' => 'prodi-kimia',
             'level' => 'pengguna',
             'email' => 'prodikimia@gmail.com',
-            'password' => 'prodikimia12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Arsitekur',
             'status' => 'prodi-arsitektur',
             'level' => 'pengguna',
             'email' => 'prodiarsitektur@gmail.com',
-            'password' => 'prodiarsitektur12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Prodi Statistika',
             'status' => 'prodi-statistika',
             'level' => 'pengguna',
             'email' => 'prodistatistika@gmail.com',
-            'password' => 'prodistatistika12'
+            'password' => 'password'
         ]);
         \App\Models\User::create([
             'name' => 'Laboratorium',
             'status' => 'laboratorium',
             'level' => 'pengguna',
             'email' => 'laboratorium@gmail.com',
-            'password' => 'laboratorium12'
+            'password' => 'password'
         ]);
     }
 }

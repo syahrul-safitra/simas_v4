@@ -15,11 +15,12 @@ return new class extends Migration {
             $table->string('indek_berkas')->nullable();
             $table->string('kode_klasifikasi_arsip')->nullable();
             $table->date('tanggal_penyelesaian')->nullable();
-            $table->text('isi');
+            $table->text('pesan_arsipkan')->nullable();
             $table->date('tanggal')->nullable();
             $table->time('pukul')->nullable();
             $table->boolean('selesai')->default(false);
             $table->boolean('verifikasi_kasubag')->default(false);
+            $table->boolean('arsipkan')->default(false);
             $table->timestamps(); // default setting
 
             // foreign key : 

@@ -24,13 +24,15 @@
                 <a href="{{ url('dashboard/pengguna') }}" class="btn btn-info  mb-3"><i
                         class="bi bi-arrow-left-circle me-2"></i>Kembali</a>
 
+
+                <a href="{{ url('dashboard/disposisi1/' . $disposisi1->id . '/cetak') }} " class="btn btn-success mb-3"><i
+                        class="bi bi-printer me-2"></i>Cetak</a>
+
+
                 @if (!$disposisi3->selesai)
                     <a href="{{ url('pengguna/disposisis3/create/' . $suratMasuk->id) }} " class="btn btn-primary mb-3"><i
                             class="bi bi-plus-circle me-2"></i>Buat</a>
                 @else
-                    <a href="{{ url('dashboard/disposisis/' . $disposisi2->id . '/cetak') }} "
-                        class="btn btn-success mb-3"><i class="bi bi-printer me-2"></i>Cetak</a>
-
                     <a href="{{ url('pengguna/disposisi3/' . $disposisi3->id . '/edit') }} " class="btn btn-warning mb-3"><i
                             class="bi bi-pencil-square me-2"></i>Edit</a>
 
@@ -81,19 +83,15 @@
                         <td style="width: 65%">
                             @if ($disposisi1)
                                 {!! $disposisi1->tanggal_penyelesaian ? date('d-m-Y', strtotime($disposisi1->tanggal_penyelesaian)) : '' !!}
+                            @endif
                         </td>
-                        @endif
-
                     </tr>
-                    <tr>
 
+                    <tr>
 
                         <th scope="row" style="width: 30%">Isi</th>
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
-                            {!! $disposisi1 ? 'Kasubag : ' . $disposisi1->isi : '' !!}
-                            <hr>
-
                             @php
                                 $user2 = App\Models\User::find($disposisi2->user_id);
 

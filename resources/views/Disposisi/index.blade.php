@@ -42,13 +42,49 @@
 
                     @if ($disposisi->selesai)
                         @if (!$disposisi->verifikasi_kasubag)
-                            <form action="{{ url('dashboard/disposisi1/' . $disposisi->id) }}" method="POST">
+                            <form action="{{ url('dashboard/disposisi1/' . $disposisi->id . '/verifikasi') }}"
+                                method="POST">
                                 @csrf
                                 <div class="btn btn btn-success mb-3 " id="btn-verifikasi">
                                     <i class="fas fa-key me-2"></i>Verifikasi
                                 </div>
                             </form>
                         @endif
+                    @endif
+
+                    @if ($disposisi->verifikasi_kasubag && !$disposisi->arsipkan)
+                        <!-- Button trigger modal -->
+
+                        <div class="btn btn-info mb-3 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fas fa-archive me-2"></i>Arsipkan
+                        </div>
+
+                        <form action="{{ url('dashboard/disposisi1/' . $disposisi->id . '/arsipkan') }}" method="POST">
+                            @csrf
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pesan Arsipkan</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="pesan_arsipkan"
+                                                placeholder="pesan arsipkan" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     @endif
 
                     <form action="{{ url('dashboard/disposisi1/' . $disposisi->id) }}" method="POST">
@@ -98,16 +134,38 @@
                         @endif
 
                     </tr>
+
+
+                    {{-- 
+                    // NOTE : disampaikan kepada :
+                    --}}
+
+                    <tr>
+                        <th scope="row" style="width: 30%">Disampaikan Kepada</th>
+                        <td style="width: 5%">:</td>
+                        <td style="width: 65%">
+
+                            @if ($disposisi)
+                                @if ($disposisi->disposisi2)
+                                    @php
+
+                                        $no = 1;
+
+                                        $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
+                                    @endphp
+
+                                    {{ $no . '. ' . $user2->name }}
+                                @endif
+                            @endif
+
+
+                        </td>
+                    </tr>
+
                     <tr>
                         <th scope="row" style="width: 30%">Isi</th>
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
-
-
-                            {{-- {!! $disposisi ? $disposisi->isi : '' !!} --}}
-
-                            {!! $disposisi ? 'Kasubag : ' . $disposisi->isi : '' !!}
-                            {{-- pesan ini ditampilkan jika sudah dibuat oleh user lain :  --}}
 
                             @if ($disposisi)
                                 @if ($disposisi->disposisi2)
@@ -117,12 +175,6 @@
                                     @endphp --}}
 
                                     @if ($disposisi->disposisi2->selesai)
-                                        @php
-                                            $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
-
-                                        @endphp
-
-                                        <hr>
                                         {!! $user2->name . ':' . $disposisi->disposisi2->isi !!}
                                     @endif
 
@@ -144,7 +196,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th scope="row" style="width: 30%">Kepada</th>
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
@@ -155,7 +207,7 @@
 
 
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th scope="row" style="width: 30%">Tanggal</th>
                         <td style="width: 5%">:</td>
@@ -176,30 +228,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row" style="width: 30%">Disampaikan Kepada</th>
-                        <td style="width: 5%">:</td>
-                        <td style="width: 65%">
 
-                            {{-- @if ($disposisi)
-                                @if ($disposisi->disposisi2)
-                                    @php
-                                        $disampaikan = $disposisi->dis;
-
-                                        foreach ($disampaikan as $value) {
-                                            $dataKepada[] = $value->user_id;
-                                        }
-                                    @endphp
-                                    @foreach ($users as $user)
-                                        @if (in_array($user->id, $dataKepada))
-                                            <p>{{ $user->name }}</p>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                            @endif --}}
-                        </td>
-                    </tr>:
 
                     <tr>
                         <th scope="row" style="width: 30%">Selesai</th>
@@ -229,12 +258,35 @@
                             @endif
                         </td>
                     </tr>
+
+                    <tr>
+                        <th scope="row" style="width: 30%">Arsipkan</th>
+                        <td style="width: 5%">:</td>
+                        <td style="width: 65%">
+                            @if ($disposisi)
+                                @if ($disposisi->arsipkan)
+                                    <span class="badge bg-success">Sudah</span>
+                                @else
+                                    <span class="badge bg-warning">Belum</span>
+                                @endif
+                            @endif
+                        </td>
+                    </tr>
+
+
                 </tbody>
             </table>
         </div>
     </div>
 
+    {{-- 
+    LOGIC : jika disposisi 1 ada :
+ --}}
     @if ($disposisi)
+
+        {{-- 
+        LOGIC : jika disposisi 2 ada : maka tampilkan log surat :
+    --}}
         @if ($disposisi->disposisi2)
             <div class="bg-light rounded h-100 p-4">
 
@@ -249,6 +301,9 @@
 
                                     <th scope="row" style="width: 30%">
 
+                                        {{-- 
+                                            LOGIC : user pastilah kasubag :
+                                        --}}
                                         @php
                                             $user = App\Models\User::find($disposisi->user_id);
                                         @endphp
@@ -258,6 +313,10 @@
                                         {{ $user->name }} menyampaiakan surat ke</th>
                                     <td style="width: 5%">:</td>
                                     <td style="width: 65%">
+
+                                        {{-- 
+                                        LOGIC : user2 diambil dari data kolom user_id di table disposisi2 :
+                                        --}}
                                         @php
 
                                             $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
@@ -271,37 +330,64 @@
 
                                 <tr>
 
-                                    @if ($disposisi->disposisi2)
-                                        @if ($disposisi->disposisi2->selesai)
-                                            <th scope="row" style="width: 30%">
+                                    {{-- @if ($disposisi->disposisi2) --}}
 
-                                                ({{ date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) }})
-                                                {{ $user2->name }} </th>
-                                            <td style="width: 5%">:</td>
-                                            <td style="width: 65%">
-                                                {!! $disposisi->disposisi2->isi !!}
-                                            </td>
-                                        @endif
+                                    {{-- 
+                                        LOGIC : jika disposisi2 telah selesai maka tampilkan isinya :
+                                    --}}
+                                    @if ($disposisi->disposisi2->selesai)
+                                        <th scope="row" style="width: 30%">
+
+                                            ({{ date('d-m-Y', strtotime($disposisi->disposisi2->created_at)) }})
+                                            {{ $user2->name }} </th>
+                                        <td style="width: 5%">:</td>
+                                        <td style="width: 65%">
+                                            {!! $disposisi->disposisi2->isi !!}
+                                        </td>
                                     @endif
+                                    {{-- @endif --}}
 
                                 </tr>
 
-                                {{-- <tr>
+                                {{-- 
+                                LOGIC : jika disposisi2 selesai, jika disposisi 3 ada, jika disposisi 3 selesai : maka tampilkan isi dari disposisi3.
+                                --}}
+
+                                <tr>
                                     @if ($disposisi->disposisi2)
                                         @if ($disposisi->disposisi2->selesai)
-                                            @if ($disposisi->disposisi2->disposisi3->selesai)
-                                                <th scope="row" style="width: 30%">
+                                            @if ($disposisi->disposisi2->disposisi3)
+                                                @if ($disposisi->disposisi2->disposisi3->selesai)
+                                                    <th scope="row" style="width: 30%">
 
-                                                    ({{ date('d-m-Y', strtotime($disposisi->disposisi2->disposisi3->created_at)) }})
-                                                    {{ $user3->name }} </th>
-                                                <td style="width: 5%">:</td>
-                                                <td style="width: 65%">
-                                                    {!! $disposisi->disposisi2->disposisi3->isi !!}
-                                                </td>
+                                                        ({{ date('d-m-Y', strtotime($disposisi->disposisi2->disposisi3->created_at)) }})
+                                                        {{ $user3->name }} </th>
+                                                    <td style="width: 5%">:</td>
+                                                    <td style="width: 65%">
+                                                        {!! $disposisi->disposisi2->disposisi3->isi !!}
+                                                    </td>
+                                                @endif
                                             @endif
                                         @endif
                                     @endif
-                                </tr> --}}
+                                </tr>
+
+                                {{-- 
+                                LOGIC : jika kasubag sudah mengarsipkan surat, maka tampilkan di log surat :
+                                --}}
+
+                                @if ($disposisi->arsipkan)
+                                    <tr>
+                                        <th scope="row" style="width: 30%">
+
+                                            ({{ date('d-m-Y', strtotime($disposisi->updated_at)) }})
+                                            {{ 'Kasubag telah mengarsipkan surat' }} </th>
+                                        <td style="width: 5%">:</td>
+                                        <td style="width: 65%">
+                                            {!! $disposisi->pesan_arsipkan !!}
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

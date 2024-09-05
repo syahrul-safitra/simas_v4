@@ -98,18 +98,16 @@
         <div class="col-lg-12 mb-3">
             {{-- <label for="">Pesan dari kasubag</label>
             <input type="text" class="form-control" value="{!! $suratMasuk->disposisi1->isi !!}" readonly> --}}
-            <label class="form-label">Pesan dari kasubag : </label>
-            <div class="readonly">
-                {!! date('d-m-Y', strtotime($suratMasuk->disposisi1->created_at)) . $suratMasuk->disposisi1->isi !!}
-            </div>
-
             <hr>
             @php
                 $user2 = App\Models\User::find($suratMasuk->disposisi1->disposisi2->user_id);
             @endphp
             <label for="form-label">Pesan dari {{ $user2->name }}</label>
-            {!! date('d-m-Y', strtotime($suratMasuk->disposisi1->disposisi2->created_at)) .
+            {!! '(' .
+                date('d-m-Y', strtotime($suratMasuk->disposisi1->disposisi2->created_at)) .
+                ') : ' .
                 $suratMasuk->disposisi1->disposisi2->isi !!}
+            <hr>
         </div>
 
         <!-- row 5 -->

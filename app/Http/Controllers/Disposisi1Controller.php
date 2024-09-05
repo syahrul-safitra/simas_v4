@@ -55,7 +55,7 @@ class Disposisi1Controller extends Controller
             'tanggal_penyelesaian' => '',
             'tanggal' => '',
             'pukul' => '',
-            'isi' => 'required',
+            'isi' => '',
             'surat_masuk_id' => 'required',
             'user_id' => 'required',
         ]);
@@ -84,7 +84,6 @@ class Disposisi1Controller extends Controller
             'tanggal_penyelesaian' => '',
             'tanggal' => '',
             'pukul' => '',
-            'isi' => 'required',
             'surat_masuk_id' => 'required',
             'user_id' => 'required',
             'create_id' => 'required'
@@ -95,7 +94,6 @@ class Disposisi1Controller extends Controller
         $inputDisposisi['tanggal_penyelesaian'] = $validated['tanggal_penyelesaian'];
         $inputDisposisi['tanggal'] = $validated['tanggal'];
         $inputDisposisi['pukul'] = $validated['pukul'];
-        $inputDisposisi['isi'] = $validated['isi'];
         $inputDisposisi['surat_masuk_id'] = $validated['surat_masuk_id'];
         $inputDisposisi['user_id'] = $validated['create_id'];
 
@@ -223,6 +221,9 @@ class Disposisi1Controller extends Controller
 
     public function update_disposisi1_diteruskan(Request $request, Disposisi1 $disposisi1)
     {
+
+        // NOTE : time to refactor : 
+
         $validated = $request->validate([
             'indek_berkas' => '',
             'kode_klasifikasi_arsip' => '',
@@ -294,5 +295,16 @@ class Disposisi1Controller extends Controller
         return view('Disposisi.cetak', [
             'disposisi' => $disposisi1,
         ]);
+    }
+
+    public function arsipkan(Request $request, Disposisi1 $disposisi1)
+    {
+
+        $disposisi1->update([
+            'pesan_arsipkan' => $request->pesan_arsipkan,
+            'arsipkan' => true
+        ]);
+
+        return redirect('dashboard/disposisi1/' . $disposisi1->surat_masuk_id)->with('success', 'Data disposisi telah diarsipkan!');
     }
 }

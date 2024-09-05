@@ -31,7 +31,7 @@
                     <a href="{{ url('pengguna/disposisis2/create_diteruskan/' . $suratMasuk->id) }} "
                         class="btn btn-success mb-3"><i class="fas fa-paper-plane me-2"></i>Teruskan</a>
                 @else
-                    <a href="{{ url('dashboard/disposisis/' . $disposisi2->id . '/cetak') }} "
+                    <a href="{{ url('dashboard/disposisi1/' . $disposisi1->id . '/cetak') }} "
                         class="btn btn-success mb-3"><i class="bi bi-printer me-2"></i>Cetak</a>
 
                     @if ($disposisi2->disposisi3)
@@ -95,8 +95,6 @@
                         <th scope="row" style="width: 30%">Isi</th>
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
-                            {!! $disposisi1 ? 'Kasubag : ' . $disposisi1->isi : '' !!}
-                            <br>
 
                             @php
                                 $user2 = App\Models\User::find($disposisi2->user_id);
@@ -135,7 +133,7 @@
                         <td style="width: 5%">:</td>
                         <td style="width: 65%">
 
-                            <p>{{ $user2->name }}</p>
+                            {{-- <p>{{ $user2->name }}</p> --}}
 
                             {{-- @if ($disposisi1)
                                 @if ($disposisi1->diteruskan1->first())
@@ -153,6 +151,14 @@
                                     @endforeach
                                 @endif
                             @endif --}}
+
+                            @if ($disposisi2->disposisi3)
+                                @php
+                                    $user3 = App\Models\User::find($disposisi2->disposisi3->user_id);
+                                @endphp
+
+                                <p>{{ $user3->name }}</p>
+                            @endif
                         </td>
                     </tr>:
 

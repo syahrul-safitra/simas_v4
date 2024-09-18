@@ -168,11 +168,14 @@
                     <p>Disampaikan Kepada</p>
 
                     <br>
+
+                    @php
+                        $no = 0;
+                    @endphp
                     @if ($disposisi->disposisi2)
                         @php
+                            $no++;
                             $user2 = App\Models\User::find($disposisi->disposisi2->user_id);
-
-                            $no = 1;
                         @endphp
 
                         <p style="display: flex; gap:10px">
@@ -221,12 +224,15 @@
                     <p>Isi</p>
                     <br>
 
+                    @php
+                        $nomor = 0;
+                    @endphp
+
                     @if ($disposisi->disposisi2)
                         @if ($disposisi->disposisi2->selesai)
                             @php
-                                $nomor = 1;
+                                $nomor++;
                             @endphp
-
                             <div style="display: flex">{{ $nomor . '. ' }} {!! $disposisi->disposisi2->isi !!}</div>
                             <br>
                         @endif

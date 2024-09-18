@@ -17,10 +17,10 @@ class Disposisi1Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return 'hola';
-    }
+    // public function index()
+    // {
+    //     return 'hola';
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -55,13 +55,14 @@ class Disposisi1Controller extends Controller
             'tanggal_penyelesaian' => '',
             'tanggal' => '',
             'pukul' => '',
-            'isi' => '',
+            'pesan_arsipkan' => 'required',
             'surat_masuk_id' => 'required',
             'user_id' => 'required',
         ]);
 
-        $validated['verifikasi_kasubag'] = true;
         $validated['selesai'] = true;
+        $validated['verifikasi_kasubag'] = true;
+        $validated['arsipkan'] = true;
 
         try {
             // input data disposisi : 
@@ -116,45 +117,85 @@ class Disposisi1Controller extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        // return $dataDisposisi;
 
-        // redirect ke
-        return redirect('dashboard/disposisi1/' . $validated['surat_masuk_id'])->with('success', 'Data disposisi berhasil di buat!');
-    }
+        // Get User : 
+        $user = User::find($validated['user_id']);
 
-    public function teruskan(Request $request)
-    {
-        // validation data : 
-        $validated = $request->validate([
-            'indek_berkas' => '',
-            'kode_klasifikasi_arsip' => '',
-            'tanggal_penyelesaian' => '',
-            'tanggal' => '',
-            'pukul' => '',
-            'isi' => 'required',
-            'surat_masuk_id' => 'required',
-        ]);
+        // Get Surat : 
+        $surat = SuratMasuk::find($validated['surat_masuk_id']);
 
-        $inputDisposisi['indek_berkas'] = $validated['indek_berkas'];
-        $inputDisposisi['kode_klasifikasi_arsip'] = $validated['kode_klasifikasi_arsip'];
-        $inputDisposisi['tanggal_penyelesaian'] = $validated['tanggal_penyelesaian'];
-        $inputDisposisi['tanggal'] = $validated['tanggal'];
-        $inputDisposisi['pukul'] = $validated['pukul'];
-        $inputDisposisi['isi'] = $validated['isi'];
-        $inputDisposisi['surat_masuk_id'] = $validated['surat_masuk_id'];
+        // Kirim Wa :        
+        $curl = curl_init();
 
-        try {
-            // input data disposisi : 
-            Disposisi1::create($inputDisposisi);
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $user->no_wa,
+                    'message' => 'Assalamualaikum, ada surat masuk baru dari ' . $surat->asal_surat,
+                    'countryCode' => '62', //optional
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: 4-E_!DH-PoPo#H1_snd3' //change TOKEN to your actual token
+                ),
+            )
+        );
 
-        } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
         }
+        curl_close($curl);
 
-        // redirect ke
-        return redirect('dashboard/disposisi1/' . $validated['surat_masuk_id'])->with('success', 'Data disposisi berhasil di buat!');
+        if (isset($error_msg)) {
+            echo $error_msg;
+        }
+        echo $response;
 
+        return redirect('dashboard/disposisi1/' . $validated['surat_masuk_id'])->with('success', 'Disposisi berhasil diteruskan!');
     }
+
+    // public function teruskan(Request $request)
+    // {
+    //     // validation data : 
+    //     $validated = $request->validate([
+    //         'indek_berkas' => '',
+    //         'kode_klasifikasi_arsip' => '',
+    //         'tanggal_penyelesaian' => '',
+    //         'tanggal' => '',
+    //         'pukul' => '',
+    //         'isi' => 'required',
+    //         'surat_masuk_id' => 'required',
+    //     ]);
+
+    //     $inputDisposisi['indek_berkas'] = $validated['indek_berkas'];
+    //     $inputDisposisi['kode_klasifikasi_arsip'] = $validated['kode_klasifikasi_arsip'];
+    //     $inputDisposisi['tanggal_penyelesaian'] = $validated['tanggal_penyelesaian'];
+    //     $inputDisposisi['tanggal'] = $validated['tanggal'];
+    //     $inputDisposisi['pukul'] = $validated['pukul'];
+    //     $inputDisposisi['isi'] = $validated['isi'];
+    //     $inputDisposisi['surat_masuk_id'] = $validated['surat_masuk_id'];
+
+    //     try {
+    //         // input data disposisi : 
+    //         Disposisi1::create($inputDisposisi);
+
+    //     } catch (\Exception $e) {
+    //         return back()->with('error', $e->getMessage());
+    //     }
+
+    //     // redirect ke
+    //     return redirect('dashboard/disposisi1/' . $validated['surat_masuk_id'])->with('success', 'Data disposisi berhasil di buat!');
+
+    // }
 
     /**
      * Display the specified resource.
@@ -206,7 +247,7 @@ class Disposisi1Controller extends Controller
             'tanggal_penyelesaian' => '',
             'tanggal' => '',
             'pukul' => '',
-            'isi' => 'required',
+            'pesan_arsipkan' => 'required',
         ]);
 
         try {
@@ -223,14 +264,12 @@ class Disposisi1Controller extends Controller
     {
 
         // NOTE : time to refactor : 
-
         $validated = $request->validate([
             'indek_berkas' => '',
             'kode_klasifikasi_arsip' => '',
             'tanggal_penyelesaian' => '',
             'tanggal' => '',
             'pukul' => '',
-            'isi' => 'required',
             'user_id' => 'required',
             'disposisi2_id' => 'required'
         ]);
@@ -240,7 +279,6 @@ class Disposisi1Controller extends Controller
         $inputDisposisi['tanggal_penyelesaian'] = $validated['tanggal_penyelesaian'];
         $inputDisposisi['tanggal'] = $validated['tanggal'];
         $inputDisposisi['pukul'] = $validated['pukul'];
-        $inputDisposisi['isi'] = $validated['isi'];
 
         // $disposisi2_user_id = $validated['user_id'];
 
@@ -249,14 +287,19 @@ class Disposisi1Controller extends Controller
         try {
             $disposisi1->update($inputDisposisi);
 
-            // hapus data yang disposisi yang lama : 
-            Disposisi2::destroy($validated['disposisi2_id']);
+            // LOGIC : jika user_id disposisi2 diganti : 
 
-            // buat ulang data disposisi 2 :
-            Disposisi2::create([
-                'user_id' => $validated['user_id'],
-                'disposisi1_id' => $disposisi1->id
-            ]);
+            if ($disposisi1->disposisi2->user_id != $request->user_id) {
+                // hapus data yang disposisi yang lama : 
+                Disposisi2::destroy($validated['disposisi2_id']);
+
+                // buat ulang data disposisi 2 :
+                Disposisi2::create([
+                    'user_id' => $validated['user_id'],
+                    'disposisi1_id' => $disposisi1->id
+                ]);
+
+            }
 
             DB::commit();
         } catch (\Exception $e) {

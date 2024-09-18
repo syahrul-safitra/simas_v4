@@ -10,7 +10,7 @@
                     <i class="fas fa-envelope fa-2x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Jumlah Seluruh Surat Masuk</p>
-                        {{-- <h6 class="mb-0">{{ $seluruhSuratMasuk }}</h6> --}}
+                        <h6 class="mb-0">{{ $seluruhSuratMasuk }}</h6>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                     <i class="fas fa-mail-bulk fa-2x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Jumlah Surat Masuk Bulan Ini</p>
-                        {{-- <h6 class="mb-0">{{ $suratMasukBlnIni }}</h6> --}}
+                        <h6 class="mb-0">{{ $suratMasukBlnIni }}</h6>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                     <i class="fas fa-envelope-square fa-2x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Jumlah Seluruh Surat Keluar</p>
-                        {{-- <h6 class="mb-0">{{ $seluruhSuratKeluar }}</h6> --}}
+                        <h6 class="mb-0">{{ $seluruhSuratKeluar }}</h6>
 
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <i class="fas fa-envelope-open-text fa-2x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Jumlah Surat Keluar Bulan Ini</p>
-                        {{-- <h6 class="mb-0">{{ $suratKeluarBlnIni }}</h6> --}}
+                        <h6 class="mb-0">{{ $suratKeluarBlnIni }}</h6>
                     </div>
                 </div>
             </div>

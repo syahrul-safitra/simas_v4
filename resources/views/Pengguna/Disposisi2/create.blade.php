@@ -77,14 +77,14 @@
 
         <!-- row 4 -->
         <div class="row">
-            <div class="col-lg-6 mb-3">
+            {{-- <div class="col-lg-6 mb-3">
                 <label for="kepada" class="form-label">Kepada</label>
                 <input type="text" class="form-control @error('kepada') is-invalid @enderror" name="kepada"
                     value="{{ @old('kepada', $suratMasuk->disposisi1->kepada) }}" id="kepada" autocomplete="off">
                 @error('kepada')
                     <p class="text-danger">{{ $kepada }}</p>
                 @enderror
-            </div>
+            </div> --}}
             <div class="col-lg-6 mb-3">
                 <label for="pukul" class="form-label">Pukul</label>
                 <input type="time" class="form-control" name="pukul" value="@old('pukul')" id="pukul">

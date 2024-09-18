@@ -97,7 +97,7 @@
         <!-- table content -->
         <div class="content">
 
-            <h3>Laporan Surat Masuk</h3><br>
+            <h3>Laporan Surat Keluar</h3><br>
             <h4>Periode {{ date('d-m-Y', strtotime($tanggal_awal)) }} - {{ date('d-m-Y', strtotime($tanggal_akhir)) }}
             </h4>
             <br>
@@ -105,24 +105,21 @@
             <table class="main" border="1" bordercollapse="collapse">
                 <tr>
                     <th>No</th>
-                    <th>No Surat</th>
+                    <th>Kode Klasifikasi</th>
                     <th>Tanggal Surat</th>
-                    <th>Asal</th>
-                    <th>Tanggal Diterima</th>
+                    <th>Isi</th>
+                    <th>Tujuan</th>
                     <th>Sifat</th>
-                    <th>Isi Ringkas</th>
-                    <th>Status</th>
                 </tr>
-                @foreach ($suratMasuks as $suratMasuk)
+                @foreach ($suratKeluars as $suratKeluar)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $suratMasuk->no_surat }}</td>
-                        <td>{{ date('d-m-Y', strtotime($suratMasuk->tanggal_surat)) }}</td>
-                        <td>{{ $suratMasuk->asal_surat }}</td>
-                        <td>{{ date('d-m-Y', strtotime($suratMasuk->tanggal_diterima)) }}</td>
-                        <td>{{ $suratMasuk->sifat }}</td>
-                        <td>{{ $suratMasuk->isi_ringkas }}</td>
-                        <td>{{ $suratMasuk->status }}</td>
+                        <td>{{ $suratKeluar->kode_klasifikasi }}</td>
+                        <td>{{ date('d-m-Y', strtotime($suratKeluar->tanggal_surat_keluar)) }}</td>
+                        <td>{{ $suratKeluar->isi }}</td>
+                        <td>{{ $suratKeluar->SuratMasuk ? $suratKeluar->SuratMasuk->asal_surat : $suratKeluar->tujuan }}
+                        </td>
+                        <td>{{ $suratKeluar->sifat }}</td>
                     </tr>
                 @endforeach
             </table>

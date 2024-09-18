@@ -17,12 +17,26 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
+
+            @can('staff')
+                <a href="{{ url('/') }}" class="nav-item nav-link"><i
+                        class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+
+                <a href="{{ url('dashboard/suratmasuk') }}"
+                    class="nav-item nav-link {{ (Request::is('dashboard/suratmasuk*') ? 'active' : '' || Request::is('dashboard/diteruskan*') || Request::is('dashboard/disposisi*')) ? 'active' : '' }}"><i
+                        class="fa fa-envelope me-2"></i>Surat Masuk</a>
+
+                <a href="{{ url('dashboard/suratkeluar') }}"
+                    class="nav-item nav-link {{ Request::is('dashboard/suratkeluar*') ? 'active' : '' }}"><i
+                        class="fa fa-reply me-2"></i>Surat Keluar</a>
+            @endcan
+
             <a href="{{ url('dashboard/pengguna') }}"
-                class="nav-item nav-link {{ Request::is('dashboard/pengguna*') ? 'active' : '' }}"><i
+                class="nav-item nav-link {{ Request::is('dashboard/disposisi2*') ? 'active' : '' }}"><i
                     class="bi bi-file-earmark-text-fill me-2"></i>Surat dari KSBG</a>
 
             <a href="{{ url('pengguna/disposisi3') }}"
-                class="nav-item nav-link {{ Request::is('dashboard/suratdisampaikan*') ? 'active' : '' }}"><i
+                class="nav-item nav-link {{ Request::is('pengguna/disposisi3*') ? 'active' : '' }}"><i
                     class="fas fa-envelope-open me-2"></i>Lanjutan Disposisi</a>
         </div>
     </nav>

@@ -73,14 +73,14 @@
 
         <!-- row 4 -->
         <div class="row">
-            <div class="col-lg-6 mb-3">
+            {{-- <div class="col-lg-6 mb-3">
                 <label for="kepada" class="form-label">Kepada</label>
                 <input type="text" class="form-control @error('kepada') is-invalid @enderror" name="kepada"
                     value="{{ @old('kepada', $disposisi1->kepada) }}" id="kepada" autocomplete="off">
                 @error('kepada')
                     <p class="text-danger">{{ $kepada }}</p>
                 @enderror
-            </div>
+            </div> --}}
             <div class="col-lg-6 mb-3">
                 <label for="pukul" class="form-label">Pukul</label>
                 {{-- @dd($disposisi->pukul->format('H:i')); --}}
@@ -96,21 +96,6 @@
                 @enderror
             </div>
         </div>
-
-        <!-- row 5 -->
-        <div class="row">
-            <div class="col-lg-12 mb-3">
-                <label for="body" class="form-label">Isi <span class="text-danger">*</span></label>
-                @error('isi')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-                <input id="isi" type="hidden" value="{{ old('isi', $disposisi1->isi) }}" name="isi" required>
-                <trix-editor input="isi"></trix-editor>
-            </div>
-            <div class="col-lg-6 mb-3">
-            </div>
-        </div>
-
 
         {{-- row 6 --}}
         <div class="row ">
@@ -131,7 +116,7 @@
             </div>
         </div>
 
-        <a href="{{ url('dashboard/disposisi1/' . $disposisi1->id) }}" class="btn btn-warning me-2">Batal</a>
+        <a href="{{ url('dashboard/disposisi1/' . $disposisi1->suratMasuk->id) }}" class="btn btn-warning me-2">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 

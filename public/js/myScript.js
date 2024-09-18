@@ -7,6 +7,7 @@ $(document).ready(function () {
    $('#surat_masuk').DataTable();
    $('#surat_keluar').DataTable();
    $('#table-instansi').DataTable();
+   $('#table-arsip-disposisi').DataTable();
    // $('#instansi').select2();
    // $('#tujuan').select2();
    $('#tindak-lanjut').select2();
@@ -144,7 +145,7 @@ $(document).ready(function () {
 
       swal({
          title: "Apakah anda yakin?",
-         text: "Data surat keluar akan dihapus",
+         text: "Data informasi akan dihapus",
          icon: "warning",
          buttons: true,
          dangerMode: true,

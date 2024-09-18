@@ -17,10 +17,10 @@ class Disposisi2Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return 'holla';
-    }
+    // public function index()
+    // {
+    //     return 'holla';
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -85,7 +85,7 @@ class Disposisi2Controller extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect('pengguna/disposisi2/' . $validated['disposisi1_id'])->with('success', 'Disposisi berhasil dibuat dan disamppaikan ke kasubag');
+        return redirect('pengguna/disposisi2/' . $validated['disposisi1_id'])->with('success', 'Disposisi berhasil dibuat dan disampaikan ke kasubag');
     }
 
     // Store disposisi2 diteruskan : 
@@ -132,7 +132,7 @@ class Disposisi2Controller extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect('pengguna/disposisi2/' . $validated['disposisi1_id'])->with('success', 'Disposisi berhasil dibuat dan disamppaikan ke kasubag');
+        return redirect('pengguna/disposisi2/' . $validated['disposisi1_id'])->with('success', 'Disposisi berhasil diteruskan!');
 
     }
 
@@ -149,7 +149,7 @@ class Disposisi2Controller extends Controller
         return view('Pengguna.Disposisi2.index', [
             'suratMasuk' => SuratMasuk::find($diposisi1->surat_masuk_id),
             'disposisi1' => $diposisi1,
-            'disposisi2' => $disposisi2,
+            'disposisi2' => $disposisi2->load('disposisi3'),
             'users' => User::all()
         ]);
     }
@@ -243,6 +243,7 @@ class Disposisi2Controller extends Controller
         $editDisposisi1['tanggal_penyelesaian'] = $validated['tanggal_penyelesaian'];
         $editDisposisi1['tanggal'] = $validated['tanggal'];
         $editDisposisi1['pukul'] = $validated['pukul'];
+
 
         $inputDisposisi2['isi'] = $validated['isi'];
         $inputDisposisi2['selesai'] = true;

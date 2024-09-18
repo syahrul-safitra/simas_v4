@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{ url('/') }}" class="nav-item nav-link"><i
+            <a href="{{ url('/') }}" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }} "><i
                     class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 
             <a href="{{ url('dashboard/suratmasuk') }}"
@@ -40,18 +40,20 @@
                         class="far fa-newspaper"></i>Informasi</a>
             @endcan
 
-            @can('permission')
+            @can('non_kasubag')
                 <a href="{{ url('/dashboard/pengguna') }}"
-                    class="nav-item nav-link {{ Request::is('dashboard/pengguna*') ? 'active' : '' }}"><i
+                    class="nav-item nav-link {{ Request::is('dashboard/pengguna') ? 'active' : '' }}"><i
                         class="bi bi-file-earmark-text-fill me-2"></i>Surat dari KSBG</a>
 
-                <a href="{{ url('/dashboard/suratdisampaikan') }}"
-                    class="nav-item nav-link {{ Request::is('dashboard/suratdisampaikan*') ? 'active' : '' }}"><i
-                        class="bi bi-file-earmark-text-fill me-2"></i>Lanjutan Disposisi</a>
+                <a href="{{ url('pengguna/disposisi3') }}"
+                    class="nav-item nav-link {{ Request::is('pengguna/disposisi3*') ? 'active' : '' }}"><i
+                        class="fas fa-envelope-open me-2"></i>Lanjutan Disposisi</a>
+
+
+                <a href="{{ url('pengguna/arsipdisposisi') }}"
+                    class="nav-item nav-link {{ Request::is('pengguna/arsipdisposisi*') ? 'active' : '' }}"><i
+                        class="fas fa-envelope-open me-2"></i>Arsip Disposisi</a>
             @endcan
 
-            <a href="{{ url('pengguna/disposisi3') }}"
-                class="nav-item nav-link {{ Request::is('pengguna/disposisi3*') ? 'active' : '' }}"><i
-                    class="fas fa-envelope-open me-2"></i>Lanjutan Disposisi</a>
     </nav>
 </div>

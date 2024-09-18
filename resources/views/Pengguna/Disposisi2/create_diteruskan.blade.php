@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('Pengguna.layouts.main')
 
 @section('container')
     <form action="{{ url('pengguna/disposisis2/diteruskan') }}" method="POST">

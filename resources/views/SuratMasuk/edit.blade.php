@@ -5,9 +5,9 @@
         <div class="col-sm-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Edit Surat Masuk</h6>
-                @foreach ($errors->all() as $error)
+                {{-- @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
-                @endforeach
+                @endforeach --}}
                 <form action="{{ url('dashboard/suratmasuk/' . $suratMasuk->id) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf

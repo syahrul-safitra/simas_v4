@@ -72,7 +72,7 @@ class SuratMasukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SuratMasuk $suratMasuk)
+    public function show(SuratMasuk $suratmasuk)
     {
         //
     }
@@ -80,12 +80,13 @@ class SuratMasukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SuratMasuk $suratMasuk)
+    public function edit(SuratMasuk $suratmasuk)
     {
+
         $dataStatus = ['diketahui', 'dihadiri', 'ditindak lanjuti(proses)'];
         $dataSifat = ['biasa', 'penting', 'rahasia'];
-        return view('dashboardSuratMasuk.edit', [
-            'suratMasuk' => $suratMasuk,
+        return view('SuratMasuk.edit', [
+            'suratMasuk' => $suratmasuk,
             'statuss' => $dataStatus,
             'sifats' => $dataSifat
         ]);
@@ -94,7 +95,7 @@ class SuratMasukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SuratMasuk $suratMasuk)
+    public function update(Request $request, SuratMasuk $suratmasuk)
     {
         // buat rules : 
         $rules = [
@@ -109,7 +110,7 @@ class SuratMasukController extends Controller
 
 
         // cek apakah no surat diubah : 
-        if ($request->no_surat != $suratMasuk->no_surat) {
+        if ($request->no_surat != $suratmasuk->no_surat) {
             // masukan kedalam rules : 
             $rules['no_surat'] = 'required|unique:surat_masuks|max:255';
         }
@@ -128,7 +129,7 @@ class SuratMasukController extends Controller
             $validated['file'] = $renameNamaFile;
 
             // hapus file lama : 
-            File::delete('file/' . $suratMasuk->file);
+            File::delete('file/' . $suratmasuk->file);
 
             // pindah kan file :
             // buat variable nama folder : 
@@ -139,7 +140,7 @@ class SuratMasukController extends Controller
         }
 
         // simpan data kedalam DB : 
-        SuratMasuk::where('id', $suratMasuk->id)
+        SuratMasuk::where('id', $suratmasuk->id)
             ->update($validated);
 
         return redirect('dashboard/suratmasuk')->with('success', 'Surat Masuk has been edited!');
@@ -160,4 +161,16 @@ class SuratMasukController extends Controller
         // with() :: adalah session yang digunakan untuk mengirim pesan succes atau error saat data telah di inputkan : 
         return redirect('dashboard/suratmasuk')->with('success', 'Surat telah dihapus!');
     }
+
+    public function cetak(Request $request)
+    {
+
+        return view('SuratMasuk.cetak', [
+            'suratMasuks' => SuratMasuk::whereBetween('tanggal_diterima', [$request->tanggal_awal, $request->tanggal_akhir])->orderBy('tanggal_diterima', 'ASC')->get(),
+            'tanggal_awal' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir
+
+        ]);
+    }
+
 }

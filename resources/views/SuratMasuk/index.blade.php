@@ -64,14 +64,15 @@
                             <th scope="col">Isi Ringkas</th>
                             <th scope="col">Status</th>
                             <th scope="col">Berkas</th>
-                            @if (auth()->user()->status == 'kasubag')
-                                <th scope="col">Diteruskan</th>
-                            @endif
-                            <th scope="col">Disposisi</th>
+                            @can('kasubag')
+                                <th scope="col">Disposisi</th>
+                            @endcan
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+
+
 
                         @if (auth()->user()->status == 'kasubag')
                             @foreach ($suratMasuks as $suratMasuk)
@@ -90,21 +91,14 @@
                                                     class="bi bi-file-earmark-pdf-fill"></i></a>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
-
+                                    @can('kasubag')
+                                        <td>
                                             <a href="{{ url('dashboard/disposisi1/' . $suratMasuk->id) }}"
-                                                class="btn btn-primary"
+                                                class="btn btn-success"
                                                 style="padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px"><i
-                                                    class="bi bi-arrow-up-square"></i></a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{ url('dashboard/disposisi1/' . $suratMasuk->id) }}"
-                                            class="btn btn-success"
-                                            style="padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px"><i
-                                                class="bi bi-file-earmark-arrow-up"></i></a>
-                                    </td>
+                                                    class="bi bi-file-earmark-arrow-up"></i></a>
+                                        </td>
+                                    @endcan
                                     <td>
                                         <div class="d-flex gap-4">
                                             <a href="{{ url('dashboard/suratmasuk/' . $suratMasuk->id . '/edit') }}"
@@ -141,12 +135,6 @@
                                             <a class="fs-4" style="color: red" href="{!! asset('file/' . $suratMasuk->file) !!}"><i
                                                     class="bi bi-file-earmark-pdf-fill"></i></a>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{ url('dashboard/disposisi/' . $suratMasuk->id) }}"
-                                            class="btn btn-success"
-                                            style="padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px"><i
-                                                class="bi bi-file-earmark-arrow-up"></i></a>
                                     </td>
                                     <td>
                                         <div class="d-flex gap-4">

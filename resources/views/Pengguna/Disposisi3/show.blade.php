@@ -29,20 +29,32 @@
                         class="bi bi-printer me-2"></i>Cetak</a>
 
 
+                {{-- 
+                        // LOGIC : jika disposisi 3 belum di buat == belum selesai : 
+                        // LOGIC - maka boleh buat.
+                        // LOGIC : jika disposisi 3 telah dibuat dan belum diverifikasi maka boleh dirubah / dihapus.
+                        // LOGIC : jika disposisi 3 telah dibuat dan telah diverfikasi maka tidak boleh dirubah dan dihapus.
+                        --}}
+
                 @if (!$disposisi3->selesai)
                     <a href="{{ url('pengguna/disposisis3/create/' . $suratMasuk->id) }} " class="btn btn-primary mb-3"><i
                             class="bi bi-plus-circle me-2"></i>Buat</a>
                 @else
-                    <a href="{{ url('pengguna/disposisi3/' . $disposisi3->id . '/edit') }} " class="btn btn-warning mb-3"><i
-                            class="bi bi-pencil-square me-2"></i>Edit</a>
+                    {{-- 
+                        // LOGIC : jika belum di arsipkan : 
+                --}}
+                    @if (!$disposisi1->verifikasi_kasubag)
+                        <a href="{{ url('pengguna/disposisi3/' . $disposisi3->id . '/edit') }} "
+                            class="btn btn-warning mb-3"><i class="bi bi-pencil-square me-2"></i>Edit</a>
 
-                    <form action="{{ url('pengguna/disposisi3/' . $disposisi3->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="btn btn btn-danger mb-3 " id="btn-delete-disposisi">
-                            <i class="bi bi-trash me-2"></i>Hapus
-                        </div>
-                    </form>
+                        <form action="{{ url('pengguna/disposisi3/' . $disposisi3->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="btn btn btn-danger mb-3 " id="btn-delete-disposisi">
+                                <i class="bi bi-trash me-2"></i>Hapus
+                            </div>
+                        </form>
+                    @endif
                 @endif
 
 
@@ -270,7 +282,7 @@
                                     {{ $user3->name }}
 
                                 <td style="width: 5%">:</td>
-                                <td>Selesai</td>
+                                <td>{!! $disposisi3->isi !!}</td>
                                 </th>
 
                             </tr>

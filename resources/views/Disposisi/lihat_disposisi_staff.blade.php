@@ -14,87 +14,12 @@
         <div class="bg-light rounded h-100 p-4">
             <div class="d-flex gap-2">
 
-                @if (auth()->user()->level == 'master')
-                    <a href="{{ url('dashboard/suratmasuk') }}" class="btn btn-info  mb-3"><i
-                            class="bi bi-arrow-left-circle me-2"></i>Kembali</a>
-                @else
-                    <a href="{{ url('dashboard/pengguna') }}" class="btn btn-info  mb-3"><i
-                            class="bi bi-arrow-left-circle me-2"></i>Kembali</a>
-                @endif
+                <a href="{{ url('pengguna/arsipdisposisi') }}" class="btn btn-info  mb-3"><i
+                        class="bi bi-arrow-left-circle me-2"></i>Kembali</a>
 
-                @if (!$disposisi)
-                    <a href="{{ url('dashboard/disposisis1/create/' . $suratMasuk->id) }} " class="btn btn-primary mb-3"><i
-                            class="bi bi-plus-circle me-2"></i>Buat</a>
+                <a href="{{ url('dashboard/disposisi1/' . $disposisi->id . '/cetak') }} " class="btn btn-success mb-3"><i
+                        class="bi bi-printer me-2"></i>Cetak</a>
 
-                    <a href="{{ url('dashboard/disposisi1_diteruskan/create_diteruskan/' . $suratMasuk->id) }} "
-                        class="btn btn-success mb-3"><i class="fas fa-paper-plane me-2"></i>Teruskan</a>
-                @else
-                    <a href="{{ url('dashboard/disposisi1/' . $disposisi->id . '/cetak') }} "
-                        class="btn btn-success mb-3"><i class="bi bi-printer me-2"></i>Cetak</a>
-
-                    @if ($disposisi->disposisi2)
-                        <a href="{{ url('dashboard/disposisis1/' . $disposisi->id . '/edit_disposisi1_diteruskan') }} "
-                            class="btn btn-warning mb-3"><i class="bi bi-pencil-square me-2"></i>Edit</a>
-                    @else
-                        <a href="{{ url('dashboard/disposisi1/' . $disposisi->id) . '/edit' }} "
-                            class="btn btn-warning mb-3"><i class="bi bi-pencil-square me-2"></i>Edit</a>
-                    @endif
-
-                    @if ($disposisi->selesai)
-                        @if (!$disposisi->verifikasi_kasubag)
-                            <form action="{{ url('dashboard/disposisi1/' . $disposisi->id . '/verifikasi') }}"
-                                method="POST">
-                                @csrf
-                                <div class="btn btn btn-success mb-3 " id="btn-verifikasi">
-                                    <i class="fas fa-key me-2"></i>Verifikasi
-                                </div>
-                            </form>
-                        @endif
-                    @endif
-
-                    @if ($disposisi->verifikasi_kasubag && !$disposisi->arsipkan)
-                        <!-- Button trigger modal -->
-
-                        <div class="btn btn-info mb-3 " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <i class="fas fa-archive me-2"></i>Arsipkan
-                        </div>
-
-                        <form action="{{ url('dashboard/disposisi1/' . $disposisi->id . '/arsipkan') }}" method="POST">
-                            @csrf
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pesan Arsipkan</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input type="text" class="form-control" name="pesan_arsipkan"
-                                                placeholder="pesan arsipkan" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    @endif
-
-                    <form action="{{ url('dashboard/disposisi1/' . $disposisi->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="btn btn btn-danger mb-3 " id="btn-delete-disposisi">
-                            <i class="bi bi-trash me-2"></i>Hapus
-                        </div>
-                    </form>
-                @endif
             </div>
             <table class="table table-striped table-hover">
 

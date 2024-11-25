@@ -101,3 +101,9 @@ Route::get('pengguna/arsipdisposisi/{disposisi}', [DashboardPengguna::class, 'li
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('logout', [LoginController::class, 'logout']);
 Route::post('login', [LoginController::class, 'authenticate']);
+
+// NOTE : Controller Disposisi Arsip : 
+Route::get("dashboard/arsip_disposisi", [Disposisi1Controller::class, 'disposisi_arsip'])->middleware('master');
+Route::get("dashboard/arsip_disposisi/{disposisi}", [Disposisi1Controller::class, 'lihatArsip'])->middleware('master');
+
+Route::get('lihat_informasi', [InformasiController::class, 'lihatInformasi'])->middleware('guest');

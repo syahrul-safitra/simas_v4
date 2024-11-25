@@ -109,6 +109,7 @@
                 @foreach ($users as $user)
                     <div class="d-block">
                         <input type="radio" class="form-check-input" value="{{ $user->id }}" name="user_id"
+                            onchange="handleChange(this)"
                             {{ @old('user_id', $disposisi1->disposisi2->user_id) ? ($disposisi1->disposisi2->user_id == $user->id ? 'checked' : '') : '' }}>
                         <label class="form-check-label" for="{{ $user->name }}">{{ $user->name }}</label>
                     </div>
@@ -128,5 +129,13 @@
         document.addEventListener('trix-file-accept', function() {
             e.preventDefault();
         });
+
+        function handleChange(src) {
+
+            if (src.value != <?= $disposisi1->disposisi2->user_id ?>) {
+                swal("Peringatan!", "Jika anda merubah tujuan user, maka data disposisi yang lama akan dihapus!",
+                    "warning");
+            }
+        }
     </script>
 @endsection

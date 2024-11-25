@@ -112,4 +112,12 @@ class InformasiController extends Controller
         return redirect('dashboard/informasi')->with('success', 'Data informasi berhasil dihapus!');
 
     }
+
+    public function lihatInformasi()
+    {
+        return view('Informasi.lihat', [
+            'informasis' => Informasi::all()
+        ]);
+
+    }
 }

@@ -26,18 +26,22 @@
 
             <a href="{{ url('dashboard/suratkeluar') }}"
                 class="nav-item nav-link {{ Request::is('dashboard/suratkeluar*') ? 'active' : '' }}"><i
-                    class="fa fa-reply me-2"></i>Surat Keluar</a>
+                    class="far fa-envelope me-2"></i>Surat Keluar</a>
+
+            <a href="{{ url('dashboard/arsip_disposisi') }}"
+                class="nav-item nav-link {{ Request::is('dashboard/arsip_disposisi*') ? 'active' : '' }}"><i
+                    class="fas fa-envelope-open-text me-2"></i>Disposisi Arsip</a>
 
             @can('kasubag')
                 <a href="{{ url('/dashboard/user') }}"
                     class="nav-item nav-link {{ Request::is('dashboard/user*') ? 'active' : '' }}"><i
-                        class="fas fa-users"></i>User</a>
+                        class="fas fa-users me-2"></i>User</a>
             @endcan
 
             @can('kasubag')
                 <a href="{{ url('/dashboard/informasi') }}"
                     class="nav-item nav-link {{ Request::is('dashboard/informasi*') ? 'active' : '' }}"><i
-                        class="far fa-newspaper"></i>Informasi</a>
+                        class="far fa-newspaper me-2"></i>Informasi</a>
             @endcan
 
             @can('non_kasubag')

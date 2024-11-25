@@ -350,4 +350,22 @@ class Disposisi1Controller extends Controller
 
         return redirect('dashboard/disposisi1/' . $disposisi1->surat_masuk_id)->with('success', 'Data disposisi telah diarsipkan!');
     }
+
+    public function disposisi_arsip()
+    {
+
+        return view('Disposisi.disposisiArsip', [
+            'disposisis' => Disposisi1::where('arsipkan', true)->get()
+        ]);
+
+    }
+
+    public function lihatArsip(Disposisi1 $disposisi)
+    {
+
+        return view('Disposisi.lihatDisposisiArsip', [
+            'disposisi' => $disposisi,
+            'suratMasuk' => $disposisi->suratMasuk
+        ]);
+    }
 }

@@ -179,6 +179,7 @@ $(document).ready(function () {
          }
       })
    })
+   
 
    $('#btn-verifikasi').on('click', function(e) {
       e.preventDefault();

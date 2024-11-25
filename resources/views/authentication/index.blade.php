@@ -17,7 +17,7 @@
                     @csrf
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" name="email" id="email" value="{{ @old('email') }}"
-                            autofocus required>
+                            placeholder="Email" autofocus required>
                         <label for="email">Email address</label>
                     </div>
                     <div class="form-floating mb-4">
@@ -26,6 +26,7 @@
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Login</button>
+                    <a href="{{ url('lihat_informasi') }}" class="btn btn-primary py-2 w-100 ">Cek Informasi</a>
                 </form>
             </div>
         </div>
